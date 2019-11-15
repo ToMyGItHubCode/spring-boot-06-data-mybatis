@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.springboot.mapper.AirDataMapper" >
+  <resultMap id="BaseResultMap" type="com.atguigu.springboot.bean.AirData" >
+    <id column="AIR_ID" property="airId" jdbcType="BIGINT" />
+    <result column="AQI" property="aqi" jdbcType="INTEGER" />
+    <result column="YEAR_MONTH" property="yearMonth" jdbcType="BIGINT" />
+    <result column="SCOPE" property="scope" jdbcType="VARCHAR" />
+    <result column="QUALITY_LEVEL" property="qualityLevel" jdbcType="VARCHAR" />
+    <result column="PM25" property="pm25" jdbcType="INTEGER" />
+    <result column="PM10" property="pm10" jdbcType="INTEGER" />
+    <result column="SO2" property="so2" jdbcType="INTEGER" />
+    <result column="CO" property="co" jdbcType="REAL" />
+    <result column="NO2" property="no2" jdbcType="INTEGER" />
+    <result column="O3" property="o3" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AIR_ID, AQI, YEAR_MONTH, SCOPE, QUALITY_LEVEL, PM25, PM10, SO2, CO, NO2, O3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.atguigu.springboot.bean.AirDataExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from air_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="getDataList" resultMap="BaseResultMap">
+    select * from air_data
+  </select>
+  <select id="countAll" resultType="java.lang.Integer">
+    select count(1) from air_data
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from air_data
+    where AIR_ID = #{airId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from air_data
+    where AIR_ID = #{airId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.atguigu.springboot.bean.AirDataExample" >
+    delete from air_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.springboot.bean.AirData" >
+    insert into air_data (AIR_ID, AQI, YEAR_MONTH, 
+      SCOPE, QUALITY_LEVEL, PM25, 
+      PM10, SO2, CO, NO2, 
+      O3)
+    values (#{airId,jdbcType=BIGINT}, #{aqi,jdbcType=INTEGER}, #{yearMonth,jdbcType=BIGINT}, 
+      #{scope,jdbcType=VARCHAR}, #{qualityLevel,jdbcType=VARCHAR}, #{pm25,jdbcType=INTEGER}, 
+      #{pm10,jdbcType=INTEGER}, #{so2,jdbcType=INTEGER}, #{co,jdbcType=REAL}, #{no2,jdbcType=INTEGER}, 
+      #{o3,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.atguigu.springboot.bean.AirData" >
+    insert into air_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="airId != null" >
+        AIR_ID,
+      </if>
+      <if test="aqi != null" >
+        AQI,
+      </if>
+      <if test="yearMonth != null" >
+        `YEAR_MONTH`,
+      </if>
+      <if test="scope != null" >
+        SCOPE,
+      </if>
+      <if test="qualityLevel != null" >
+        QUALITY_LEVEL,
+      </if>
+      <if test="pm25 != null" >
+        PM25,
+      </if>
+      <if test="pm10 != null" >
+        PM10,
+      </if>
+      <if test="so2 != null" >
+        SO2,
+      </if>
+      <if test="co != null" >
+        CO,
+      </if>
+      <if test="no2 != null" >
+        NO2,
+      </if>
+      <if test="o3 != null" >
+        O3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="airId != null" >
+        #{airId,jdbcType=BIGINT},
+      </if>
+      <if test="aqi != null" >
+        #{aqi,jdbcType=INTEGER},
+      </if>
+      <if test="yearMonth != null" >
+        #{yearMonth,jdbcType=BIGINT},
+      </if>
+      <if test="scope != null" >
+        #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityLevel != null" >
+        #{qualityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="pm25 != null" >
+        #{pm25,jdbcType=INTEGER},
+      </if>
+      <if test="pm10 != null" >
+        #{pm10,jdbcType=INTEGER},
+      </if>
+      <if test="so2 != null" >
+        #{so2,jdbcType=INTEGER},
+      </if>
+      <if test="co != null" >
+        #{co,jdbcType=REAL},
+      </if>
+      <if test="no2 != null" >
+        #{no2,jdbcType=INTEGER},
+      </if>
+      <if test="o3 != null" >
+        #{o3,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.atguigu.springboot.bean.AirDataExample" resultType="java.lang.Integer" >
+    select count(*) from air_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update air_data
+    <set >
+      <if test="record.airId != null" >
+        AIR_ID = #{record.airId,jdbcType=BIGINT},
+      </if>
+      <if test="record.aqi != null" >
+        AQI = #{record.aqi,jdbcType=INTEGER},
+      </if>
+      <if test="record.yearMonth != null" >
+        YEAR_MONTH = #{record.yearMonth,jdbcType=BIGINT},
+      </if>
+      <if test="record.scope != null" >
+        SCOPE = #{record.scope,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualityLevel != null" >
+        QUALITY_LEVEL = #{record.qualityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pm25 != null" >
+        PM25 = #{record.pm25,jdbcType=INTEGER},
+      </if>
+      <if test="record.pm10 != null" >
+        PM10 = #{record.pm10,jdbcType=INTEGER},
+      </if>
+      <if test="record.so2 != null" >
+        SO2 = #{record.so2,jdbcType=INTEGER},
+      </if>
+      <if test="record.co != null" >
+        CO = #{record.co,jdbcType=REAL},
+      </if>
+      <if test="record.no2 != null" >
+        NO2 = #{record.no2,jdbcType=INTEGER},
+      </if>
+      <if test="record.o3 != null" >
+        O3 = #{record.o3,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update air_data
+    set AIR_ID = #{record.airId,jdbcType=BIGINT},
+      AQI = #{record.aqi,jdbcType=INTEGER},
+      YEAR_MONTH = #{record.yearMonth,jdbcType=BIGINT},
+      SCOPE = #{record.scope,jdbcType=VARCHAR},
+      QUALITY_LEVEL = #{record.qualityLevel,jdbcType=VARCHAR},
+      PM25 = #{record.pm25,jdbcType=INTEGER},
+      PM10 = #{record.pm10,jdbcType=INTEGER},
+      SO2 = #{record.so2,jdbcType=INTEGER},
+      CO = #{record.co,jdbcType=REAL},
+      NO2 = #{record.no2,jdbcType=INTEGER},
+      O3 = #{record.o3,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.springboot.bean.AirData" >
+    update air_data
+    <set >
+      <if test="aqi != null" >
+        AQI = #{aqi,jdbcType=INTEGER},
+      </if>
+      <if test="yearMonth != null" >
+        YEAR_MONTH = #{yearMonth,jdbcType=BIGINT},
+      </if>
+      <if test="scope != null" >
+        SCOPE = #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityLevel != null" >
+        QUALITY_LEVEL = #{qualityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="pm25 != null" >
+        PM25 = #{pm25,jdbcType=INTEGER},
+      </if>
+      <if test="pm10 != null" >
+        PM10 = #{pm10,jdbcType=INTEGER},
+      </if>
+      <if test="so2 != null" >
+        SO2 = #{so2,jdbcType=INTEGER},
+      </if>
+      <if test="co != null" >
+        CO = #{co,jdbcType=REAL},
+      </if>
+      <if test="no2 != null" >
+        NO2 = #{no2,jdbcType=INTEGER},
+      </if>
+      <if test="o3 != null" >
+        O3 = #{o3,jdbcType=INTEGER},
+      </if>
+    </set>
+    where AIR_ID = #{airId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.springboot.bean.AirData" >
+    update air_data
+    set AQI = #{aqi,jdbcType=INTEGER},
+      YEAR_MONTH = #{yearMonth,jdbcType=BIGINT},
+      SCOPE = #{scope,jdbcType=VARCHAR},
+      QUALITY_LEVEL = #{qualityLevel,jdbcType=VARCHAR},
+      PM25 = #{pm25,jdbcType=INTEGER},
+      PM10 = #{pm10,jdbcType=INTEGER},
+      SO2 = #{so2,jdbcType=INTEGER},
+      CO = #{co,jdbcType=REAL},
+      NO2 = #{no2,jdbcType=INTEGER},
+      O3 = #{o3,jdbcType=INTEGER}
+    where AIR_ID = #{airId,jdbcType=BIGINT}
+  </update>
+</mapper>

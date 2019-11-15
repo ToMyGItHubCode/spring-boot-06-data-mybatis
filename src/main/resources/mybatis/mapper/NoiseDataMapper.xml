@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.springboot.mapper.NoiseDataMapper" >
+  <resultMap id="BaseResultMap" type="com.atguigu.springboot.bean.NoiseData" >
+    <id column="NOISE_ID" property="noiseId" jdbcType="BIGINT" />
+    <result column="YEAR_MONTH" property="yearMonth" jdbcType="BIGINT" />
+    <result column="SOUNTH" property="sounth" jdbcType="REAL" />
+    <result column="GROUND" property="ground" jdbcType="REAL" />
+    <result column="LIBRARY" property="library" jdbcType="REAL" />
+    <result column="TEACHING_ROOM" property="teachingRoom" jdbcType="REAL" />
+    <result column="SLEEPPING_ROOM" property="sleeppingRoom" jdbcType="REAL" />
+    <result column="NORTH" property="north" jdbcType="REAL" />
+    <result column="EATING_ONE" property="eatingOne" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    NOISE_ID, YEAR_MONTH, SOUNTH, GROUND, LIBRARY, TEACHING_ROOM, SLEEPPING_ROOM, NORTH, 
+    EATING_ONE
+  </sql>
+  <select id="getNoiseData" resultMap="BaseResultMap">
+    SELECT * from noise_data
+  </select>
+
+  <select id="countAll" resultType="java.lang.Integer">
+    SELECT count(1) FROM  noise_data
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.atguigu.springboot.bean.NoiseDataExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from noise_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from noise_data
+    where NOISE_ID = #{noiseId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from noise_data
+    where NOISE_ID = #{noiseId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.atguigu.springboot.bean.NoiseDataExample" >
+    delete from noise_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.springboot.bean.NoiseData" >
+    insert into noise_data (NOISE_ID, YEAR_MONTH, SOUNTH, 
+      GROUND, LIBRARY, TEACHING_ROOM, 
+      SLEEPPING_ROOM, NORTH, EATING_ONE
+      )
+    values (#{noiseId,jdbcType=BIGINT}, #{yearMonth,jdbcType=BIGINT}, #{sounth,jdbcType=REAL}, 
+      #{ground,jdbcType=REAL}, #{library,jdbcType=REAL}, #{teachingRoom,jdbcType=REAL}, 
+      #{sleeppingRoom,jdbcType=REAL}, #{north,jdbcType=REAL}, #{eatingOne,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.atguigu.springboot.bean.NoiseData" >
+    insert into noise_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noiseId != null" >
+        NOISE_ID,
+      </if>
+      <if test="yearMonth != null" >
+        `YEAR_MONTH`,
+      </if>
+      <if test="sounth != null" >
+        SOUNTH,
+      </if>
+      <if test="ground != null" >
+        GROUND,
+      </if>
+      <if test="library != null" >
+        LIBRARY,
+      </if>
+      <if test="teachingRoom != null" >
+        TEACHING_ROOM,
+      </if>
+      <if test="sleeppingRoom != null" >
+        SLEEPPING_ROOM,
+      </if>
+      <if test="north != null" >
+        NORTH,
+      </if>
+      <if test="eatingOne != null" >
+        EATING_ONE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noiseId != null" >
+        #{noiseId,jdbcType=BIGINT},
+      </if>
+      <if test="yearMonth != null" >
+        #{yearMonth,jdbcType=BIGINT},
+      </if>
+      <if test="sounth != null" >
+        #{sounth,jdbcType=REAL},
+      </if>
+      <if test="ground != null" >
+        #{ground,jdbcType=REAL},
+      </if>
+      <if test="library != null" >
+        #{library,jdbcType=REAL},
+      </if>
+      <if test="teachingRoom != null" >
+        #{teachingRoom,jdbcType=REAL},
+      </if>
+      <if test="sleeppingRoom != null" >
+        #{sleeppingRoom,jdbcType=REAL},
+      </if>
+      <if test="north != null" >
+        #{north,jdbcType=REAL},
+      </if>
+      <if test="eatingOne != null" >
+        #{eatingOne,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.atguigu.springboot.bean.NoiseDataExample" resultType="java.lang.Integer" >
+    select count(*) from noise_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update noise_data
+    <set >
+      <if test="record.noiseId != null" >
+        NOISE_ID = #{record.noiseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.yearMonth != null" >
+        YEAR_MONTH = #{record.yearMonth,jdbcType=BIGINT},
+      </if>
+      <if test="record.sounth != null" >
+        SOUNTH = #{record.sounth,jdbcType=REAL},
+      </if>
+      <if test="record.ground != null" >
+        GROUND = #{record.ground,jdbcType=REAL},
+      </if>
+      <if test="record.library != null" >
+        LIBRARY = #{record.library,jdbcType=REAL},
+      </if>
+      <if test="record.teachingRoom != null" >
+        TEACHING_ROOM = #{record.teachingRoom,jdbcType=REAL},
+      </if>
+      <if test="record.sleeppingRoom != null" >
+        SLEEPPING_ROOM = #{record.sleeppingRoom,jdbcType=REAL},
+      </if>
+      <if test="record.north != null" >
+        NORTH = #{record.north,jdbcType=REAL},
+      </if>
+      <if test="record.eatingOne != null" >
+        EATING_ONE = #{record.eatingOne,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update noise_data
+    set NOISE_ID = #{record.noiseId,jdbcType=BIGINT},
+      YEAR_MONTH = #{record.yearMonth,jdbcType=BIGINT},
+      SOUNTH = #{record.sounth,jdbcType=REAL},
+      GROUND = #{record.ground,jdbcType=REAL},
+      LIBRARY = #{record.library,jdbcType=REAL},
+      TEACHING_ROOM = #{record.teachingRoom,jdbcType=REAL},
+      SLEEPPING_ROOM = #{record.sleeppingRoom,jdbcType=REAL},
+      NORTH = #{record.north,jdbcType=REAL},
+      EATING_ONE = #{record.eatingOne,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.springboot.bean.NoiseData" >
+    update noise_data
+    <set >
+      <if test="yearMonth != null" >
+        YEAR_MONTH = #{yearMonth,jdbcType=BIGINT},
+      </if>
+      <if test="sounth != null" >
+        SOUNTH = #{sounth,jdbcType=REAL},
+      </if>
+      <if test="ground != null" >
+        GROUND = #{ground,jdbcType=REAL},
+      </if>
+      <if test="library != null" >
+        LIBRARY = #{library,jdbcType=REAL},
+      </if>
+      <if test="teachingRoom != null" >
+        TEACHING_ROOM = #{teachingRoom,jdbcType=REAL},
+      </if>
+      <if test="sleeppingRoom != null" >
+        SLEEPPING_ROOM = #{sleeppingRoom,jdbcType=REAL},
+      </if>
+      <if test="north != null" >
+        NORTH = #{north,jdbcType=REAL},
+      </if>
+      <if test="eatingOne != null" >
+        EATING_ONE = #{eatingOne,jdbcType=REAL},
+      </if>
+    </set>
+    where NOISE_ID = #{noiseId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.springboot.bean.NoiseData" >
+    update noise_data
+    set YEAR_MONTH = #{yearMonth,jdbcType=BIGINT},
+      SOUNTH = #{sounth,jdbcType=REAL},
+      GROUND = #{ground,jdbcType=REAL},
+      LIBRARY = #{library,jdbcType=REAL},
+      TEACHING_ROOM = #{teachingRoom,jdbcType=REAL},
+      SLEEPPING_ROOM = #{sleeppingRoom,jdbcType=REAL},
+      NORTH = #{north,jdbcType=REAL},
+      EATING_ONE = #{eatingOne,jdbcType=REAL}
+    where NOISE_ID = #{noiseId,jdbcType=BIGINT}
+  </update>
+</mapper>

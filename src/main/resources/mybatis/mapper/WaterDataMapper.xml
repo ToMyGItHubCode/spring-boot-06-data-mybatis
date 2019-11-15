@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.springboot.mapper.WaterDataMapper" >
+  <resultMap id="BaseResultMap" type="com.atguigu.springboot.bean.WaterData" >
+    <id column="WATER_ID" property="waterId" jdbcType="BIGINT" />
+    <result column="YEAR_MONTH" property="yearMonth" jdbcType="BIGINT" />
+    <result column="PLACE" property="place" jdbcType="VARCHAR" />
+    <result column="PH" property="ph" jdbcType="VARCHAR" />
+    <result column="DOO" property="doo" jdbcType="REAL" />
+    <result column="TEMPERATURE" property="temperature" jdbcType="REAL" />
+    <result column="DEEP" property="deep" jdbcType="REAL" />
+    <result column="SD" property="sd" jdbcType="REAL" />
+    <result column="COD" property="cod" jdbcType="REAL" />
+    <result column="NN" property="nn" jdbcType="REAL" />
+    <result column="YNN" property="ynn" jdbcType="REAL" />
+    <result column="TP" property="tp" jdbcType="REAL" />
+    <result column="TN" property="tn" jdbcType="REAL" />
+    <result column="AN" property="an" jdbcType="REAL" />
+    <result column="CHL" property="chl" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    WATER_ID, YEAR_MONTH, PLACE, PH, DOO, TEMPERATURE, DEEP, SD, COD, NN, YNN, TP, TN, 
+    AN, CHL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.atguigu.springboot.bean.WaterDataExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from water_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from water_data
+    where WATER_ID = #{waterId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from water_data
+    where WATER_ID = #{waterId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.atguigu.springboot.bean.WaterDataExample" >
+    delete from water_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.springboot.bean.WaterData" >
+    insert into water_data (WATER_ID, YEAR_MONTH, PLACE, 
+      PH, DOO, TEMPERATURE, DEEP, 
+      SD, COD, NN, YNN, 
+      TP, TN, AN, CHL
+      )
+    values (#{waterId,jdbcType=BIGINT}, #{yearMonth,jdbcType=BIGINT}, #{place,jdbcType=VARCHAR}, 
+      #{ph,jdbcType=VARCHAR}, #{doo,jdbcType=REAL}, #{temperature,jdbcType=REAL}, #{deep,jdbcType=REAL}, 
+      #{sd,jdbcType=REAL}, #{cod,jdbcType=REAL}, #{nn,jdbcType=REAL}, #{ynn,jdbcType=REAL}, 
+      #{tp,jdbcType=REAL}, #{tn,jdbcType=REAL}, #{an,jdbcType=REAL}, #{chl,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.atguigu.springboot.bean.WaterData" >
+    insert into water_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="waterId != null" >
+        WATER_ID,
+      </if>
+      <if test="yearMonth != null" >
+        `YEAR_MONTH`,
+      </if>
+      <if test="place != null" >
+        PLACE,
+      </if>
+      <if test="ph != null" >
+        PH,
+      </if>
+      <if test="doo != null" >
+        DOO,
+      </if>
+      <if test="temperature != null" >
+        TEMPERATURE,
+      </if>
+      <if test="deep != null" >
+        DEEP,
+      </if>
+      <if test="sd != null" >
+        SD,
+      </if>
+      <if test="cod != null" >
+        COD,
+      </if>
+      <if test="nn != null" >
+        NN,
+      </if>
+      <if test="ynn != null" >
+        YNN,
+      </if>
+      <if test="tp != null" >
+        TP,
+      </if>
+      <if test="tn != null" >
+        TN,
+      </if>
+      <if test="an != null" >
+        AN,
+      </if>
+      <if test="chl != null" >
+        CHL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="waterId != null" >
+        #{waterId,jdbcType=BIGINT},
+      </if>
+      <if test="yearMonth != null" >
+        #{yearMonth,jdbcType=BIGINT},
+      </if>
+      <if test="place != null" >
+        #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="ph != null" >
+        #{ph,jdbcType=VARCHAR},
+      </if>
+      <if test="doo != null" >
+        #{doo,jdbcType=REAL},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=REAL},
+      </if>
+      <if test="deep != null" >
+        #{deep,jdbcType=REAL},
+      </if>
+      <if test="sd != null" >
+        #{sd,jdbcType=REAL},
+      </if>
+      <if test="cod != null" >
+        #{cod,jdbcType=REAL},
+      </if>
+      <if test="nn != null" >
+        #{nn,jdbcType=REAL},
+      </if>
+      <if test="ynn != null" >
+        #{ynn,jdbcType=REAL},
+      </if>
+      <if test="tp != null" >
+        #{tp,jdbcType=REAL},
+      </if>
+      <if test="tn != null" >
+        #{tn,jdbcType=REAL},
+      </if>
+      <if test="an != null" >
+        #{an,jdbcType=REAL},
+      </if>
+      <if test="chl != null" >
+        #{chl,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="getWaterData" resultMap="BaseResultMap" >
+    SELECT * FROM water_data
+  </select>
+
+  <select id="countAll" resultType="java.lang.Integer">
+    SELECT count(1) FROM  water_data
+  </select>
+
+  <select id="countByExample" parameterType="com.atguigu.springboot.bean.WaterDataExample" resultType="java.lang.Integer" >
+    select count(*) from water_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update water_data
+    <set >
+      <if test="record.waterId != null" >
+        WATER_ID = #{record.waterId,jdbcType=BIGINT},
+      </if>
+      <if test="record.yearMonth != null" >
+        YEAR_MONTH = #{record.yearMonth,jdbcType=BIGINT},
+      </if>
+      <if test="record.place != null" >
+        PLACE = #{record.place,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ph != null" >
+        PH = #{record.ph,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doo != null" >
+        DOO = #{record.doo,jdbcType=REAL},
+      </if>
+      <if test="record.temperature != null" >
+        TEMPERATURE = #{record.temperature,jdbcType=REAL},
+      </if>
+      <if test="record.deep != null" >
+        DEEP = #{record.deep,jdbcType=REAL},
+      </if>
+      <if test="record.sd != null" >
+        SD = #{record.sd,jdbcType=REAL},
+      </if>
+      <if test="record.cod != null" >
+        COD = #{record.cod,jdbcType=REAL},
+      </if>
+      <if test="record.nn != null" >
+        NN = #{record.nn,jdbcType=REAL},
+      </if>
+      <if test="record.ynn != null" >
+        YNN = #{record.ynn,jdbcType=REAL},
+      </if>
+      <if test="record.tp != null" >
+        TP = #{record.tp,jdbcType=REAL},
+      </if>
+      <if test="record.tn != null" >
+        TN = #{record.tn,jdbcType=REAL},
+      </if>
+      <if test="record.an != null" >
+        AN = #{record.an,jdbcType=REAL},
+      </if>
+      <if test="record.chl != null" >
+        CHL = #{record.chl,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update water_data
+    set WATER_ID = #{record.waterId,jdbcType=BIGINT},
+      YEAR_MONTH = #{record.yearMonth,jdbcType=BIGINT},
+      PLACE = #{record.place,jdbcType=VARCHAR},
+      PH = #{record.ph,jdbcType=VARCHAR},
+      DOO = #{record.doo,jdbcType=REAL},
+      TEMPERATURE = #{record.temperature,jdbcType=REAL},
+      DEEP = #{record.deep,jdbcType=REAL},
+      SD = #{record.sd,jdbcType=REAL},
+      COD = #{record.cod,jdbcType=REAL},
+      NN = #{record.nn,jdbcType=REAL},
+      YNN = #{record.ynn,jdbcType=REAL},
+      TP = #{record.tp,jdbcType=REAL},
+      TN = #{record.tn,jdbcType=REAL},
+      AN = #{record.an,jdbcType=REAL},
+      CHL = #{record.chl,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.springboot.bean.WaterData" >
+    update water_data
+    <set >
+      <if test="yearMonth != null" >
+        YEAR_MONTH = #{yearMonth,jdbcType=BIGINT},
+      </if>
+      <if test="place != null" >
+        PLACE = #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="ph != null" >
+        PH = #{ph,jdbcType=VARCHAR},
+      </if>
+      <if test="doo != null" >
+        DOO = #{doo,jdbcType=REAL},
+      </if>
+      <if test="temperature != null" >
+        TEMPERATURE = #{temperature,jdbcType=REAL},
+      </if>
+      <if test="deep != null" >
+        DEEP = #{deep,jdbcType=REAL},
+      </if>
+      <if test="sd != null" >
+        SD = #{sd,jdbcType=REAL},
+      </if>
+      <if test="cod != null" >
+        COD = #{cod,jdbcType=REAL},
+      </if>
+      <if test="nn != null" >
+        NN = #{nn,jdbcType=REAL},
+      </if>
+      <if test="ynn != null" >
+        YNN = #{ynn,jdbcType=REAL},
+      </if>
+      <if test="tp != null" >
+        TP = #{tp,jdbcType=REAL},
+      </if>
+      <if test="tn != null" >
+        TN = #{tn,jdbcType=REAL},
+      </if>
+      <if test="an != null" >
+        AN = #{an,jdbcType=REAL},
+      </if>
+      <if test="chl != null" >
+        CHL = #{chl,jdbcType=REAL},
+      </if>
+    </set>
+    where WATER_ID = #{waterId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.springboot.bean.WaterData" >
+    update water_data
+    set YEAR_MONTH = #{yearMonth,jdbcType=BIGINT},
+      PLACE = #{place,jdbcType=VARCHAR},
+      PH = #{ph,jdbcType=VARCHAR},
+      DOO = #{doo,jdbcType=REAL},
+      TEMPERATURE = #{temperature,jdbcType=REAL},
+      DEEP = #{deep,jdbcType=REAL},
+      SD = #{sd,jdbcType=REAL},
+      COD = #{cod,jdbcType=REAL},
+      NN = #{nn,jdbcType=REAL},
+      YNN = #{ynn,jdbcType=REAL},
+      TP = #{tp,jdbcType=REAL},
+      TN = #{tn,jdbcType=REAL},
+      AN = #{an,jdbcType=REAL},
+      CHL = #{chl,jdbcType=REAL}
+    where WATER_ID = #{waterId,jdbcType=BIGINT}
+  </update>
+</mapper>
